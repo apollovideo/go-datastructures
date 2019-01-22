@@ -323,6 +323,13 @@ func (q *Queue) Len() int64 {
 	return int64(len(q.items))
 }
 
+// Clear removes all items from the queue.
+func (q *Queue) Clear(hint int64) {
+	q.lock.Lock()
+	defer q.lock.Unlock()
+	q.items = make([]interface{}, 0, hint)
+}
+
 // Disposed returns a bool indicating if this queue
 // has had disposed called on it.
 func (q *Queue) Disposed() bool {
